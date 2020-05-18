@@ -3,7 +3,7 @@ node('redhat'){
         git 'https://github.com/singaravellu/game-of-life.git'
     }
     stage('build'){
-        sh label:'',script:'mvn clean package'
+        sh label:'',script:'mvn  package'
     }
     stage('postbuild'){
        archiveArtifacts 'gameoflife-web/target/*.war'     
