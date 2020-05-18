@@ -2,7 +2,7 @@ pipeline {
     agent any
     triggers {
 	   //upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
-	   { pollSCM('* * * * *') }
+	    pollSCM('* * * * *') 
     }
     parameters{
          choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
