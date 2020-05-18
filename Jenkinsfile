@@ -1,14 +1,16 @@
-node('redhat'){
-    stage('clone'){
-        git 'https://github.com/singaravellu/game-of-life.git'
-    }
-    stage('build'){
-        sh label:'',script:'mvn  package'
-    }
-    stage('postbuild'){
-       archiveArtifacts 'gameoflife-web/target/*.war'     
-    }
-    stage('junitresults'){
-        junit 'gameoflife-web/target/surefire-reports/*.xml'
+pipeline{
+    agent { label 'redhat' }
+    stages{
+        stage('scm'){
+            steps {
+                   checkout([$class: 'GitSCM', branches: [[name: '*/master']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
+            }
+        }
+        /*stage('Package'){
+            steps {
+                sh 'mvn package'
+            }
+        }*/
+
     }
 }
