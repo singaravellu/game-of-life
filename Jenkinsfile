@@ -14,7 +14,10 @@ pipeline {
                 echo "${env.BUILD_URL}"
                 echo "${env.BUILD_ID}"
                 echo "${env.BUILD_NUMBER}"
-                   checkout([$class: 'GitSCM', branches: [[name: "${params.branch}"]],gitTool: 'jgit',extensions:  [[$class: 'CleanBeforeCheckout']],extensions:  [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'hi']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
+                
+                input 'want to continue to build?'
+                checkout([$class: 'GitSCM', branches: [[name: "${params.branch}"]],gitTool: 'jgit',extensions:  [[$class: 'CleanBeforeCheckout']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
+                
             }
         }
         /*stage('Package'){
