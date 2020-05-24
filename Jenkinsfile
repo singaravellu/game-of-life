@@ -6,7 +6,7 @@ pipeline {
     }
     // parameters{
     //      choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
-    }
+    //}
     stages{
         stage('scm'){
 
