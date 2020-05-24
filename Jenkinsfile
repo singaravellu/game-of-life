@@ -1,30 +1,31 @@
 pipeline {
     agent any
     triggers {
-	   //upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
+	   upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
 	    pollSCM('* * * * *') 
     }
-    parameters{
-         choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
+    // parameters{
+    //      choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
     }
     stages{
         stage('scm'){
+
             steps {
                 echo "${params.branch}"
                 echo "${env.BUILD_URL}"
                 echo "${env.BUILD_ID}"
                 echo "${env.BUILD_NUMBER}"
                 
-                input 'want to continue to build?'
-                checkout([$class: 'GitSCM', branches: [[name: "${params.branch}"]],gitTool: 'jgit',extensions:  [[$class: 'CleanBeforeCheckout']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
+                //input 'want to continue to build?'
+                checkout([$class: 'GitSCM', branches: [[name: '*/master' ]],gitTool: 'jgit',extensions:  [[$class: 'CleanBeforeCheckout']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
                 
             }
         }
-        /*stage('Package'){
+        stage('Package'){
             steps {
                 sh 'mvn package'
             }
-        }*/
+        
 
     }
 }
