@@ -18,17 +18,18 @@ pipeline {
                 //input 'want to continue to build?'
                 checkout([$class: 'GitSCM', branches: [[name: '*/master' ]],gitTool: 'jgit',extensions:  [[$class: 'CleanBeforeCheckout']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
                 }
+        }
         stage('Package'){
             steps {
                 sh 'mvn package'
             }
+        }
         stage('Sonar') {
         withSonarQubeEnv('SONAR-6.7.0') {
              sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
         }
-    }
+       }
         
 
-        }
     }
 }
