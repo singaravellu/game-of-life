@@ -31,8 +31,10 @@ pipeline {
                    def password
                    withCredentials([usernamePassword(credentialsId: settings.global.idartcred, passwordVariable: 'password', usernameVariable: 'user')])
                    {
-                        "username"="${user}"
-                        "password"="${password}"
+                       // "username"="${user}"
+                        //"password"="${password}"
+                         echo "${env.user}"
+                         echo "${env.password}"
                    }  
             }
         }
