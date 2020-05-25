@@ -29,12 +29,12 @@ pipeline {
                    //def server = Artifactory.server 'Artifactory' 
                   // def username
                    //def password
-                   withCredentials([usernamePassword(credentialsId: settings.global.idartcred, passwordVariable: 'password', usernameVariable: 'user')])
+                   withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
                    {
                        // "username"="${user}"
                         //"password"="${password}"
-                         echo "${env.user}"
-                         echo "${env.password}"
+                         echo "user is $user"
+                         echo "password is $password"
                    }  
             }
         }
