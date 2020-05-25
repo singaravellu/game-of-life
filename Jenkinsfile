@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Package'){
             steps {
-                sh 'mvn package'
+                sh 'mvn deploy'
             }
         }
         stage('downloading artifacts to jfrog'){
