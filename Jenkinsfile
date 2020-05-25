@@ -1,9 +1,3 @@
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurperClassic
-import groovyx.net.http.*
-import groovy.xml.*
-import groovy.util.*
-
 pipeline {
     agent any
     triggers {
@@ -37,19 +31,16 @@ pipeline {
                    //def password
                    withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
                    {
-                       
-                         echo "user is $user"
-                         echo "password is $password"
                          rtUpload (
-                    serverId: 'Artifactory', 
-                    spec: '''{
+                        serverId: 'Artifactory', 
+                        spec: """{
                             "files": [
                                     {
                                         "pattern": "com/wakaleo/gameoflife*",
                                         "target": "libs-snapshot-local",
                                     }
                                 ]
-                            }'''
+                            }"""
                        )
                        //server.upload spec: uploadSpec
                    }  
