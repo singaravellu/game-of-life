@@ -24,6 +24,16 @@ pipeline {
                 sh 'mvn package'
             }
         }
+        stage('downloading artifacts to jfrog'){
+            steps{
+                   def server = Artifactory.server 'my-server-id' 
+                   withCredentials([usernamePassword(credentialsId: settings.global.idartcred, passwordVariable: 'password', usernameVariable: 'user')])
+                   {
+                        "username"="${user}",
+                        "password"="${password}"
+                   }  
+            }
+        }
         stage('Sonar') {
             steps{
         withSonarQubeEnv('sonar-6.7.0') {
