@@ -27,6 +27,8 @@ pipeline {
         stage('downloading artifacts to jfrog'){
             steps{
                    def server = Artifactory.server 'my-server-id' 
+                   def username
+                   def password
                    withCredentials([usernamePassword(credentialsId: settings.global.idartcred, passwordVariable: 'password', usernameVariable: 'user')])
                    {
                         "username"="${user}",
