@@ -35,16 +35,17 @@ pipeline {
                          echo "user is $user"
                          echo "password is $password"
                          rtUpload (
-                    serverId: 'Artifactory', // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-                    spec: """{
+                    serverId: 'Artifactory', 
+                    spec: '''{
                             "files": [
                                     {
                                         "pattern": "com/wakaleo/gameoflife*",
                                         "target": "libs-snapshot-local",
                                     }
                                 ]
-                            }"""
-                )
+                            }'''
+                       )
+                       //server.upload spec: uploadSpec
                    }  
             }
         }
