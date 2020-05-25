@@ -31,7 +31,7 @@ pipeline {
                    def password
                    withCredentials([usernamePassword(credentialsId: settings.global.idartcred, passwordVariable: 'password', usernameVariable: 'user')])
                    {
-                        "username"="${user}",
+                        "username"="${user}"
                         "password"="${password}"
                    }  
             }
