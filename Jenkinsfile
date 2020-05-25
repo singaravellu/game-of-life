@@ -33,7 +33,7 @@ pipeline {
                    {
                          rtUpload (
                         serverId: 'Artifactory', 
-                        spec: """{
+                       def  spec: """{
                             "files": [
                                     {
                                         "pattern": "com/wakaleo/gameoflife*",
