@@ -1,3 +1,9 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurperClassic
+import groovyx.net.http.*
+import groovy.xml.*
+import groovy.util.*
+
 pipeline {
     agent any
     triggers {
