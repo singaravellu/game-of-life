@@ -24,17 +24,27 @@ pipeline {
                 sh 'mvn package'
             }
         }
-        stage('downloading artifacts to jfrog'){
+        stage('upload artifacts to jfrog'){
             steps{
-                   //def server = Artifactory.server 'Artifactory' 
-                  // def username
-                   //def password
+                   def server = Artifactory.server 'Artifactory' 
+                   def username
+                   def password
                    withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
                    {
-                       // "username"="${user}"
-                        //"password"="${password}"
+                       
                          echo "user is $user"
                          echo "password is $password"
+                         rtUpload (
+                    serverId: server, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    spec: """{
+                            "files": [
+                                    {
+                                        "pattern": "com/wakaleo/gameoflife*",
+                                        "target": "libs-snapshot-local",
+                                    }
+                                ]
+                            }"""
+                )
                    }  
             }
         }
