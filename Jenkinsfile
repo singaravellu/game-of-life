@@ -26,16 +26,16 @@ pipeline {
         }
         stage('upload artifacts to jfrog'){
             steps{
-                   def server = Artifactory.server 'Artifactory' 
-                   def username
-                   def password
+                   //def server = Artifactory.server 'Artifactory' 
+                   //def username
+                   //def password
                    withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
                    {
                        
                          echo "user is $user"
                          echo "password is $password"
                          rtUpload (
-                    serverId: server, // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+                    serverId: 'Artifactory', // Obtain an Artifactory server instance, defined in Jenkins --> Manage:
                     spec: """{
                             "files": [
                                     {
