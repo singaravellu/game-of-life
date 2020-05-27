@@ -14,7 +14,6 @@ pipeline {
     //}
     stages{
         stage('checkout'){
-            timestamps{
             steps {
                 echo "${params.branch}"
                 echo "${env.BUILD_URL}"
@@ -64,6 +63,5 @@ pipeline {
     //             }
     //         }
     //    }
-    cleanWs()
     }
 }
