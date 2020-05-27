@@ -44,8 +44,8 @@ pipeline {
                                     {
                                     "files": [
                                         {
-                                            "pattern": "*/target/*.*",
-                                            "target": "libs-release-local/"
+                                            "pattern": "*/target/*.war",
+                                            "target": "libs-snapshot-local/gameoflife"
                                         }
                                     ]
                                     }"""
