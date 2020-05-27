@@ -59,7 +59,7 @@ pipeline {
                     }
                 }
             }
-         stage('download artifacts to jfrog'){
+         stage('download artifacts from jfrog'){
              steps{
                  script{
                          downloadSpec = 
