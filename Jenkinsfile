@@ -1,6 +1,6 @@
 
 def server = Artifactory.server 'Artifactory'
-def rtUpload
+def uploadSpec
 def password
 
 pipeline {
@@ -38,25 +38,28 @@ pipeline {
 
                        echo "${password}"
                        echo "${user}"
-                       script{
-                        rtUpload (
-                            serverId: 'Artifactory',
-                            spec: '''{
-                                "files": [
+                         uploadSpec = 
+                                    """
                                     {
-                                    "pattern": "com/wakaleo/gameoflife*",
-                                    "target": "libs-snapshot-local"
-                                    }
-                                ]
-                            }''',
-                             buildNumber ="${env.BUILD_NUMBER}"
-                        )
+                                    "files": [
+                                        {
+                                            "pattern": "*/target/*.jar",
+                                            "target": "libs-snapshot-local"
+                                        },
+                                        {
+                                            "pattern": "*/target/*.ear",
+                                            "target": "libs-snapshot-local"
+                                        }
+
+                                    ]
+                                    }"""
+                                    server.upload(uploadSpec)
                         //server.upload spec: uploadSpec
-                       }
-                   }  
-                }
+                   }
+                }  
             }
         }
+        
     
     //     stage('Sonar') {
     //         steps{
