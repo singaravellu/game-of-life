@@ -40,17 +40,17 @@ pipeline {
                        echo "${user}"
                        script{
                          uploadSpec = 
-                                    """
-                                     {
-                                     "files": [
-                                         {
-                                             "pattern": "*/target/*.war",
-                                             "target": "libs-snapshot-local/gameoflife"
-                                              "failNoOp": "true"
-                                         }
+                            """
+                            {
+                            "files": [
+                                {
+                                    "pattern": "*/target/*.war",
+                                     "target": "libs-snapshot-local/gameoflife",
+                                    "failNoOp": "true"
+                                  }
                                     ]
-                                     }"""
-                                     server.upload(uploadSpec)
+                                }"""
+                                server.upload(uploadSpec)
                         // server.upload spec: uploadSpec 
  /*                        downloadSpec = 
                                     """
