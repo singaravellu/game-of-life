@@ -56,7 +56,7 @@ pipeline {
                                     {
                                     "files": [
                                         {
-                                            "pattern": "*/target/*.war",
+                                            "pattern": "*/libs-snapshot-local/*.war",
                                             "target": "gameoflife/"
                                         }
                                     ]
