@@ -1,3 +1,7 @@
+
+def server = Artifactory.server 'Artifactory'
+
+
 pipeline {
     agent any
     triggers {
@@ -26,7 +30,7 @@ pipeline {
         }
         stage('upload artifacts to jfrog'){
             steps{
-                   def server = Artifactory.server 'Artifactory' 
+                    
                    //def username
                    //def password
                    /* groovylint-disable-next-line LineLength */
