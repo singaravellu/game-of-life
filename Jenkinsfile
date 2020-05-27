@@ -53,7 +53,7 @@ pipeline {
                    }  
             }
         }
-    }
+    
     //     stage('Sonar') {
     //         steps{
     //         withSonarQubeEnv('sonar-6.7.0') {
