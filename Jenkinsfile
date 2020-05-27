@@ -6,7 +6,7 @@ def password
 pipeline {
     agent any
     triggers {
-	   //upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
+	  // upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
 	    pollSCM('* * * * *') 
     }
     // parameters{
