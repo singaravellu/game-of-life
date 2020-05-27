@@ -44,8 +44,8 @@ pipeline {
                                     {
                                     "files": [
                                         {
-                                            "pattern": "*/target/SNAPSHOT.jar",
-                                            "target": "libs-snapshot-local/gameoflife"
+                                            "pattern": "*/target/*.*",
+                                            "target": "libs-release-local/"
                                         }
                                     ]
                                     }"""
