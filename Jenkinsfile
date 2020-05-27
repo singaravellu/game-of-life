@@ -46,12 +46,7 @@ pipeline {
                                         {
                                             "pattern": "*/target/*.jar",
                                             "target": "libs-snapshot-local"
-                                        },
-                                        {
-                                            "pattern": "*/target/*.ear",
-                                            "target": "libs-snapshot-local"
                                         }
-
                                     ]
                                     }"""
                                     server.upload(uploadSpec)
