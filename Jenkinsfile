@@ -1,6 +1,7 @@
 
 def server = Artifactory.server 'Artifactory'
-
+def username
+def password
 
 pipeline {
     agent any
@@ -30,26 +31,26 @@ pipeline {
         }
         stage('upload artifacts to jfrog'){
             steps{
-                    
-                   //def username
-                   //def password
                    /* groovylint-disable-next-line LineLength */
                    withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
                    {
+
+                       echo "${password}"
+                       echo "${user}"
                        
-                //          rtUpload (
-                //         serverId: 'Artifactory', 
-                //         spec: """{
-                //             "files": [
-                //                     {
-                //                         "pattern": "com/wakaleo/gameoflife*",
-                //                         "target": "libs-snapshot-local",
-                //                     }
-                //                 ]
-                //             }"""
-                //        )
-                //        //server.upload spec: uploadSpec
-                //    }  
+                    //      rtUpload (
+                    //     serverId: 'Artifactory', 
+                    //     spec: """{
+                    //         "files": [
+                    //                 {
+                    //                     "pattern": "com/wakaleo/gameoflife*",
+                    //                     "target": "libs-snapshot-local",
+                    //                 }
+                    //             ]
+                    //         }"""
+                    //    )
+                    //    //server.upload spec: uploadSpec
+                   }  
             }
         }
     }
