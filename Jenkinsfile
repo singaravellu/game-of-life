@@ -1,6 +1,6 @@
 
 def server = Artifactory.server 'Artifactory'
-def username
+def rtUpload
 def password
 
 pipeline {
