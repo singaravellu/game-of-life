@@ -39,21 +39,21 @@ pipeline {
                        echo "${password}"
                        echo "${user}"
                        
-                    //      rtUpload (
-                    //     serverId: 'Artifactory', 
-                    //     spec: """{
-                    //         "files": [
-                    //                 {
-                    //                     "pattern": "com/wakaleo/gameoflife*",
-                    //                     "target": "libs-snapshot-local",
-                    //                 }
-                    //             ]
-                    //         }"""
-                    //    )
-                    //    //server.upload spec: uploadSpec
+                         rtUpload (
+                        serverId: 'Artifactory', 
+                        spec: """{
+                            "files": [
+                                    {
+                                        "pattern": "com/wakaleo/gameoflife*",
+                                        "target": "libs-snapshot-local",
+                                    }
+                                ]
+                            }"""
+                       )
+                        //server.upload spec: uploadSpec
                    }  
+                }
             }
-        }
         }
     
     //     stage('Sonar') {
