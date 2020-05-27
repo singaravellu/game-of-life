@@ -69,7 +69,6 @@ pipeline {
                 }  
             }
         }
-}
         
     
     //     stage('Sonar') {
@@ -79,5 +78,6 @@ pipeline {
     //             }
     //         }
     //    }
+}
 }
 
