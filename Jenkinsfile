@@ -13,7 +13,8 @@ pipeline {
     //      choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
     //}
     stages{
-        stage('scm'){
+        stage('checkout'){
+            timestamps{
             steps {
                 echo "${params.branch}"
                 echo "${env.BUILD_URL}"
@@ -21,6 +22,7 @@ pipeline {
                 echo "${env.BUILD_NUMBER}"
                 
                 //input 'want to continue to build?'
+                cleanWs()
                 checkout([$class: 'GitSCM', branches: [[name: '*/master' ]],gitTool: 'jgit',extensions:  [[$class: 'CleanBeforeCheckout']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
                 }
         }
@@ -53,6 +55,7 @@ pipeline {
                    }  
             }
         }
+        }
     
     //     stage('Sonar') {
     //         steps{
@@ -61,7 +64,6 @@ pipeline {
     //             }
     //         }
     //    }
-        
-
+    cleanWs()
     }
 }
