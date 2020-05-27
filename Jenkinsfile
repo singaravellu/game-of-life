@@ -51,7 +51,7 @@ pipeline {
                                     ]
                                 }"""
                                 //server.upload(uploadSpec),failNoOp: true
-                        /server.upload spec: uploadSpec , failNoOp: true
+                        server.upload spec: uploadSpec , failNoOp: true
  /*                        downloadSpec = 
                                     """
                                     {
@@ -69,6 +69,7 @@ pipeline {
                 }  
             }
         }
+}
         
     
     //     stage('Sonar') {
