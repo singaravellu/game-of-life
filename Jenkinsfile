@@ -45,13 +45,13 @@ pipeline {
                             "files": [
                                 {
                                     "pattern": "*/target/*.war",
-                                     "target": "libs-snapshot-local/gameoflife",
-                                    "failNoOp": "true"
+                                     "target": "libs-snapshot-local/gameoflife"
+                                    
                                   }
                                     ]
                                 }"""
-                                server.upload(uploadSpec)
-                        // server.upload spec: uploadSpec 
+                                //server.upload(uploadSpec),failNoOp: true
+                        /server.upload spec: uploadSpec , failNoOp: true
  /*                        downloadSpec = 
                                     """
                                     {
