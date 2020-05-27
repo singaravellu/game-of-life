@@ -50,7 +50,8 @@ pipeline {
                                   }
                                     ]
                                 }"""
-                                server.upload(uploadSpec),failNoOp: true
+                                server.upload spec: uploadSpec, failNoOp: true
+                                //server.upload(uploadSpec)
                        // server.upload spec: uploadSpec , failNoOp: true
  /*                        downloadSpec = 
                                     """
@@ -59,7 +60,7 @@ pipeline {
                                         {
                                             "pattern": "libs-snapshot-local",
                                             "target": "gameoflife/"
-                                            failNoOp: true
+                                            
                                         }
                                     ]
                                     }"""
