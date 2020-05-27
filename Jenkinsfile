@@ -38,7 +38,7 @@ pipeline {
 
                        echo "${password}"
                        echo "${user}"
-                       
+                       script{
                         rtUpload (
                             serverId: 'Artifactory',
                             spec: '''{
@@ -52,6 +52,7 @@ pipeline {
                              buildNumber ="${env.BUILD_NUMBER}"
                         )
                         //server.upload spec: uploadSpec
+                       }
                    }  
                 }
             }
