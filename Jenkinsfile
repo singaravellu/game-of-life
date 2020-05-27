@@ -40,16 +40,17 @@ pipeline {
                        echo "${user}"
                        
                         rtUpload (
-                        serverId: 'Artifactory', 
-                        spec: """{
-                            "files": [
+                            serverId: 'Artifactory',
+                            spec: '''{
+                                "files": [
                                     {
-                                        "pattern": "com/wakaleo/gameoflife*",
-                                        "target": "libs-snapshot-local",
+                                    "pattern": "com/wakaleo/gameoflife*",
+                                    "target": "libs-snapshot-local"
                                     }
                                 ]
-                            }"""
-                       )
+                            }''',
+                             buildNumber ="${env.BUILD_NUMBER}"
+                        )
                         //server.upload spec: uploadSpec
                    }  
                 }
