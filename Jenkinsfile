@@ -38,6 +38,7 @@ pipeline {
 
                        echo "${password}"
                        echo "${user}"
+                       script{
                          uploadSpec = 
                                     """
                                     {
@@ -55,6 +56,7 @@ pipeline {
                                     }"""
                                     server.upload(uploadSpec)
                         //server.upload spec: uploadSpec
+                       }
                    }
                 }  
             }
