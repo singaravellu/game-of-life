@@ -39,18 +39,29 @@ pipeline {
                        echo "${password}"
                        echo "${user}"
                        script{
-                         uploadSpec = 
+                        //  uploadSpec = 
+                        //             """
+                        //             {
+                        //             "files": [
+                        //                 {
+                        //                     "pattern": "*/target/*.war",
+                        //                     "target": "libs-snapshot-local/gameoflife"
+                        //                 }
+                        //             ]
+                        //             }"""
+                        //             server.upload(uploadSpec)
+                        //server.upload spec: uploadSpec
+                        downloadSpec = 
                                     """
                                     {
                                     "files": [
                                         {
                                             "pattern": "*/target/*.war",
-                                            "target": "libs-snapshot-local/gameoflife"
+                                            "target": "gameoflife/"
                                         }
                                     ]
                                     }"""
-                                    server.upload(uploadSpec)
-                        //server.upload spec: uploadSpec
+                                    server.download(downloadSpec)	
                        }
                    }
                 }  
