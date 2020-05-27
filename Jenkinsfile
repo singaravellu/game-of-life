@@ -39,7 +39,7 @@ pipeline {
                        echo "${password}"
                        echo "${user}"
                        
-                         rtUpload (
+                        rtUpload (
                         serverId: 'Artifactory', 
                         spec: """{
                             "files": [
