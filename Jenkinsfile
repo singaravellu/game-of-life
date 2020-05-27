@@ -46,7 +46,7 @@ pipeline {
                                 {
                                     "pattern": "*/target/*.war",
                                      "target": "libs-snapshot-local",
-                                     sortBy": ["created"],
+                                     sortBy": ["created"]
                                     
                                   }
                                     ]
