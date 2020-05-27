@@ -26,26 +26,29 @@ pipeline {
         }
         stage('upload artifacts to jfrog'){
             steps{
-                   //def server = Artifactory.server 'Artifactory' 
+                   def server = Artifactory.server 'Artifactory' 
                    //def username
                    //def password
+                   /* groovylint-disable-next-line LineLength */
                    withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
                    {
-                         rtUpload (
-                        serverId: 'Artifactory', 
-                       def  spec: """{
-                            "files": [
-                                    {
-                                        "pattern": "com/wakaleo/gameoflife*",
-                                        "target": "libs-snapshot-local",
-                                    }
-                                ]
-                            }"""
-                       )
-                       //server.upload spec: uploadSpec
-                   }  
+                       
+                //          rtUpload (
+                //         serverId: 'Artifactory', 
+                //         spec: """{
+                //             "files": [
+                //                     {
+                //                         "pattern": "com/wakaleo/gameoflife*",
+                //                         "target": "libs-snapshot-local",
+                //                     }
+                //                 ]
+                //             }"""
+                //        )
+                //        //server.upload spec: uploadSpec
+                //    }  
             }
         }
+    }
     //     stage('Sonar') {
     //         steps{
     //         withSonarQubeEnv('sonar-6.7.0') {
