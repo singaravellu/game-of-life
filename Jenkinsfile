@@ -44,7 +44,7 @@ pipeline {
                             {
                             "files": [
                                 {
-                                    "pattern": "*/target/*.war",
+                                    "pattern": "*/target/*.jar",
                                      "target": "libs-snapshot-local",
                                      "sortBy": ["created"]
                                     
@@ -54,7 +54,15 @@ pipeline {
                                 server.upload spec: uploadSpec, failNoOp: true
                                 //server.upload(uploadSpec)
                        // server.upload spec: uploadSpec , failNoOp: true
- /*                        downloadSpec = 
+                       }
+                       
+                    }
+                }
+            }
+         stage('download artifacts to jfrog'){
+             steps{
+                 script{
+                         downloadSpec = 
                                     """
                                     {
                                     "files": [
@@ -65,10 +73,11 @@ pipeline {
                                         }
                                     ]
                                     }"""
-                                    server.download(downloadSpec)	 */
-                       }
-                   }
-                }  
+                                   // server.download(downloadSpec)
+                                     server.download spec: downloadSpec , failNoOp: true
+                    }
+             
+                } 
             }
         }
         
