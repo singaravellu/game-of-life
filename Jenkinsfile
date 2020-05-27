@@ -39,29 +39,31 @@ pipeline {
                        echo "${password}"
                        echo "${user}"
                        script{
-                        //  uploadSpec = 
-                        //             """
-                        //             {
-                        //             "files": [
-                        //                 {
-                        //                     "pattern": "*/target/*.war",
-                        //                     "target": "libs-snapshot-local/gameoflife"
-                        //                 }
-                        //             ]
-                        //             }"""
-                        //             server.upload(uploadSpec)
-                        //server.upload spec: uploadSpec
-                        downloadSpec = 
+                         uploadSpec = 
+                                    """
+                                     {
+                                     "files": [
+                                         {
+                                             "pattern": "*/target/*.war",
+                                             "target": "libs-snapshot-local/gameoflife"
+                                                 failNoOp: true
+                                         }
+                                    ]
+                                     }"""
+                                     server.upload(uploadSpec)
+                        // server.upload spec: uploadSpec 
+ /*                        downloadSpec = 
                                     """
                                     {
                                     "files": [
                                         {
                                             "pattern": "libs-snapshot-local",
                                             "target": "gameoflife/"
+                                            failNoOp: true
                                         }
                                     ]
                                     }"""
-                                    server.download(downloadSpec)	
+                                    server.download(downloadSpec)	 */
                        }
                    }
                 }  
