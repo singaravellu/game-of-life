@@ -13,8 +13,7 @@ pipeline {
     //      choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
     //}
     stages{
-        stage('checkout'){
-            agent { label 'redhat' }
+        stage('checkout'){            
             steps {
                 echo "${params.branch}"
                 echo "${env.BUILD_URL}"
@@ -31,7 +30,12 @@ pipeline {
             steps {
                 sh 'mvn package'
                 echo "building the code "
+                stash name:'war' includes:'*.war'
             }
+        }
+        stage('deploy'){
+        agent { label 'redhat' }
+            unstash:'war'
         }
     //   stage('upload artifacts to jfrog'){
     //         steps{
