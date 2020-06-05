@@ -34,8 +34,9 @@ pipeline {
             }
         }
         stage('deploy'){
-        agent { label 'redhat' }
+       // agent { label 'redhat' }
         steps{
+            sh 'mkdir stash'
             unstash 'war'
          }
         }
