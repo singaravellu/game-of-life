@@ -35,7 +35,9 @@ pipeline {
         }
         stage('deploy'){
         agent { label 'redhat' }
+        steps{
             unstash:'war'
+         }
         }
     //   stage('upload artifacts to jfrog'){
     //         steps{
