@@ -29,7 +29,7 @@ pipeline {
         stage('Package'){
             steps {
                 sh 'mvn package'
-                echo "building the code "
+                echo "building the code and ${pwd}"
                 stash name:'war' , includes:'target/*.war'
             }
         }
