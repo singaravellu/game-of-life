@@ -14,6 +14,7 @@ pipeline {
     //}
     stages{
         stage('checkout'){
+            agent { label 'redhat' }
             steps {
                 echo "${params.branch}"
                 echo "${env.BUILD_URL}"
@@ -28,62 +29,60 @@ pipeline {
         }
         stage('Package'){
             steps {
-                //sh 'mvn package'
-                echo "building the code byt ${}"
+                sh 'mvn package'
+                echo "building the code "
             }
         }
-        stage('upload artifacts to jfrog'){
-            steps{
-                   /* groovylint-disable-next-line LineLength */
-                   withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
-                   {
+    //   stage('upload artifacts to jfrog'){
+    //         steps{
+    //                /* groovylint-disable-next-line LineLength */
+    //                withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
+    //                {
 
-                       echo "${password}"
-                       echo "${user}"
-                       script{
-                         uploadSpec = 
-                            """
-                            {
-                            "files": [
-                                {
-                                    "pattern": "*/target/*.jar",
-                                     "target": "libs-snapshot-local",
-                                     "sortBy": ["created"]
+    //                    echo "${password}"
+    //                    echo "${user}"
+    //                    script{
+    //                      uploadSpec = 
+    //                         """
+    //                         {
+    //                         "files": [
+    //                             {
+    //                                 "pattern": "*/target/*.jar",
+    //                                  "target": "libs-snapshot-local",
+    //                                  "sortBy": ["created"]
                                     
-                                  }
-                                    ]
-                                }"""
-                                server.upload spec: uploadSpec, failNoOp: true
-                                //server.upload(uploadSpec)
-                       // server.upload spec: uploadSpec , failNoOp: true
-                       }
+    //                               }
+    //                                 ]
+    //                             }"""
+    //                             server.upload spec: uploadSpec, failNoOp: true
+    //                             //server.upload(uploadSpec)
+    //                    // server.upload spec: uploadSpec , failNoOp: true
+    //                    }
                        
-                    }
-                }
-            }
-         stage('download artifacts from jfrog'){
-             steps{
-                 script{
-                         downloadSpec = 
-                                    """
-                                    {
-                                    "files": [
-                                        {
-                                            "pattern": "libs-snapshot-local",
-                                            "target": "gameoflife/"
+    //                 }
+    //             }
+    //         }
+    //      stage('download artifacts from jfrog'){
+    //          steps{
+    //              script{
+    //                      downloadSpec = 
+    //                                 """
+    //                                 {
+    //                                 "files": [
+    //                                     {
+    //                                         "pattern": "libs-snapshot-local",
+    //                                         "target": "gameoflife/"
                                             
-                                        }
-                                    ]
-                                    }"""
-                                   // server.download(downloadSpec)
-                                     server.download spec: downloadSpec , failNoOp: true
-                    }
+    //                                     }
+    //                                 ]
+    //                                 }"""
+    //                                // server.download(downloadSpec)
+    //                                  server.download spec: downloadSpec , failNoOp: true
+    //                 }
              
-                } 
-            }
-        }
-        
-    
+    //             } 
+    //         }
+    //     }    
     //     stage('Sonar') {
     //         steps{
     //         withSonarQubeEnv('sonar-6.7.0') {
