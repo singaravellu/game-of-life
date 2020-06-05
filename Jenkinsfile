@@ -29,9 +29,9 @@ pipeline {
         stage('Package'){
             steps {
                 sh 'mvn package'
-                echo "building the code "       
+                echo "building the code "
+                stash name:'war' , includes:'target/*.war'
             }
-            stash name:'war' , includes:'target/*.war'
         }
         stage('deploy'){
         agent { label 'redhat' }
