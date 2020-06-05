@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sh 'mvn package'
                 echo "building the code "
-                stash name:'war' includes:'*.war'
+                stash name:'war' , includes:'*.war'
             }
         }
         stage('deploy'){
