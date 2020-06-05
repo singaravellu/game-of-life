@@ -30,14 +30,19 @@ pipeline {
             steps {
                 sh 'mvn package'
                 echo "building the code and ${pwd}"
-                stash name:'war' , includes:'/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war'
+                stash includes: '*.war', name: 'war'
+                sh '''
+                mkdir stash
+                cd stash
+                '''
+                unstash 'war'
             }
         }
         stage('deploy'){
        // agent { label 'redhat' }
         steps{
             sh 'mkdir stash'
-            unstash 'war'
+           // unstash 'war'
          }
         }
     //   stage('upload artifacts to jfrog'){
