@@ -19,6 +19,7 @@ pipeline {
                 echo "${env.BUILD_URL}"
                 echo "${env.BUILD_ID}"
                 echo "${env.BUILD_NUMBER}"
+                echo "${env.GIT_COMMIT}"
                 
                 //input 'want to continue to build?'
                 cleanWs()
@@ -27,7 +28,8 @@ pipeline {
         }
         stage('Package'){
             steps {
-                sh 'mvn package'
+                //sh 'mvn package'
+                echo "building the code byt ${}"
             }
         }
         stage('upload artifacts to jfrog'){
