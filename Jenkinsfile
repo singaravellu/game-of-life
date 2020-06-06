@@ -30,7 +30,9 @@ pipeline {
             steps {
                 sh 'mvn package'
                 echo "building the code and ${pwd}"
-                stash includes: '/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
+                stash allowEmpty: true, excludes: '*.xml',
+                 includes: 'gameoflife-web/target/gameoflife.war', name: 'gol-war'
+                //stash includes: '/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
             }
         }
         stage('deploy'){
@@ -38,7 +40,8 @@ pipeline {
         steps{
             //sh 'mkdir stash'
             echo "unstashing the code in ${pwd}"
-           unstash 'war'
+            unstash name: 'gol-war'
+           //unstash 'war'
          }
         }
     //   stage('upload artifacts to jfrog'){
