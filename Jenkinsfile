@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sh 'mvn package'
                 echo "building the code and ${pwd}"
-                stash includes: '/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
+                stash includes: '/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
             }
         }
         stage('deploy'){
