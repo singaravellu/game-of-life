@@ -31,7 +31,7 @@ pipeline {
                 sh 'mvn package'
                 echo "building the code and ${pwd}"
                 stash allowEmpty: true, excludes: '*.xml',
-                 includes: 'gameoflife-web/target/gameoflife.war', name: 'gol-war'
+                 includes: 'gameoflife-web/target/*.war', name: 'gol-war'
                 //stash includes: '/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
             }
         }
