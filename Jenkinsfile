@@ -11,7 +11,7 @@ node {
     }
     stage ('building docker image')
     {
-        echo "building the docker image"
+        echo "building the docker image  whoami"
         sh 'docker image build -t dockersing/gameoflife:1.0 .'
     }
 }
