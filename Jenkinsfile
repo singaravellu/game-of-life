@@ -1,6 +1,8 @@
 pipeline {
     agent any
+    options{
     timestamps()
+    }
     stages{
         stage('checkout'){
             steps{
