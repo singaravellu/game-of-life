@@ -7,11 +7,12 @@ node {
     }
     stage('archiving artifactes')
     {
+        sh 'whoami'
         archiveArtifacts 'gameoflife-web/target/*.war'
     }
     stage ('building docker image')
     {
-        echo "building the docker image  whoami"
+        echo "building the docker image  "
         sh 'docker image build -t dockersing/gameoflife:1.0 .'
     }
 }
