@@ -4,7 +4,8 @@ pipeline {
     stages{
         stage('checkout'){
             steps{
-            git 'https://github.com/singaravellu/game-of-life.git'
+                 checkoutscm
+              /*  git 'https://github.com/singaravellu/game-of-life.git' */
             }
         }
         stage('Package'){
