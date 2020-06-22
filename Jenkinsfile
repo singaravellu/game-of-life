@@ -15,4 +15,11 @@ node {
         echo "building the docker image  "
         sh 'docker image build -t dockersing/gameoflife:1.0 .'
     }
+    stage('Push the docker image to hub'){
+        withCredentials([usernamePassword(credentialsId: 'DockerCred', passwordVariable: 'passwd', usernameVariable: 'username')]) {
+         sh 'docker login -u ${username} -p{passwd} '   
+    // some block
+      }
+      sh 'docker push dockersing/gameoflife:1.0'
+    }
 }
