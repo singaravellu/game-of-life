@@ -7,6 +7,6 @@ node {
     }
     stage('archiving artifactes')
     {
-        archiveArtifacts '/gameoflife-web/target/*.war'
+        archiveArtifacts 'gameoflife-web/target/*.war'
     }
 }
