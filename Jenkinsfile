@@ -9,4 +9,9 @@ node {
     {
         archiveArtifacts 'gameoflife-web/target/*.war'
     }
+    stage ('building docker image')
+    {
+        echo "building the docker image"
+        sh 'docker image build -t dockersing/gameoflife:1.0 .'
+    }
 }
