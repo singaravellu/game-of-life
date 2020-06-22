@@ -5,10 +5,10 @@ node {
     stage('build'){
         sh 'mvn package'
     }
-    stage('archiving artifactes')
+    stage('publishing the test results')
     {
-        sh 'whoami'
-        archiveArtifacts 'gameoflife-web/target/*.war'
+        junit 'gameoflife-web/target/surefire-reports/*.xml'
+        // archiveArtifacts 'gameoflife-web/target/*.war'
     }
     stage ('building docker image')
     {
