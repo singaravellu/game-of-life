@@ -2,7 +2,8 @@ node {
     stage('scm'){
         git 'https://github.com/singaravellu/game-of-life.git'
     }
-    stage('build'){
+    stage('build')
+    {
         sh 'mvn package'
     }
     stage('publishing the test results')
@@ -28,5 +29,14 @@ node {
     // some block
       }
       sh 'docker push dockersing/gameoflife:1.0'
+    }
+    stage('Deployment in cluster')
+    {
+        echo "deploying into k8's"
+        withKubeConfig(  credentialsId: 'kubernetes') {
+    // some block
+       sh 'kubectl apply -f Deployment.yml'
+       sh 'kubectl apply -f service.yml'
+        }
     }
 }
