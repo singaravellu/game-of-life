@@ -11,12 +11,12 @@ node {
         junit 'gameoflife-web/target/surefire-reports/*.xml'
         // archiveArtifacts 'gameoflife-web/target/*.war'
     }
-    stage('SonarQube analysis') {
-    withSonarQubeEnv('sonar-6.7') 
-    { // You can override the credential to be used
-      sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
-    }
-   }
+#    stage('SonarQube analysis') {
+#    withSonarQubeEnv('sonar-6.7') 
+  #   { // You can override the credential to be used
+  #    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
+  #  }
+  # }
     stage ('building docker image')
     {
         echo "building the docker image  "
@@ -35,8 +35,8 @@ node {
        // echo "deploying into k8's"
         withKubeConfig(  credentialsId: 'kubernetes') {
     // some block
-       sh 'kubectl apply -f Deployment.yml'
-       sh 'kubectl apply -f service.yml'
+       sh 'kubectl delete -f Deployment.yml'
+       sh 'kubectl delete -f service.yml'
         }
     }
 }
