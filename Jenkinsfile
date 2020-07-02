@@ -4,7 +4,7 @@ node {
     }
     stage('build')
     {
-        sh 'whoami'
+        
         sh 'mvn package'
     }
     stage('publishing the test results')
@@ -36,8 +36,8 @@ node {
        // echo "deploying into k8's"
         withKubeConfig(  credentialsId: 'kubernetes') {
     // some block
-       sh 'kubectl apply -f Deployment.yml'
-       sh 'kubectl apply -f service.yml'
+       sh 'kubectl delete -f Deployment.yml'
+       sh 'kubectl delete -f service.yml'
         }
     }
 }
