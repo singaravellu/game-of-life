@@ -4,6 +4,7 @@ node {
     }
     stage('build')
     {
+        echo "whoami"
         sh 'mvn package'
     }
     stage('publishing the test results')
