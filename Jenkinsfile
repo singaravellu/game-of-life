@@ -1,7 +1,6 @@
 node {
-        timestamps {
-    // some block
-    }
+     timestamps 
+     {
     stage('scm') 
      {
         git 'https://github.com/singaravellu/game-of-life.git'
@@ -51,4 +50,5 @@ node {
        sh 'kubectl delete -f Deployment.yml'
        sh 'kubectl delete -f service.yml' */
         }
+     }
 }
