@@ -43,8 +43,8 @@ node {
             
            sh script: """
            
-           terraform destroy -auto-approve
-           rm -rf inventory
+           terraform apply -auto-approve
+           
            """       
          }
         }
