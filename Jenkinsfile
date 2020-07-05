@@ -1,7 +1,11 @@
 node {
-        stage('scm') {
+        timestamps {
+    // some block
+    }
+    stage('scm') 
+     {
         git 'https://github.com/singaravellu/game-of-life.git'
-        }
+    }
     stage('build')
     {
         sh 'mvn package'
