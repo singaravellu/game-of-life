@@ -52,7 +52,7 @@
     command: kubectl apply -f "https://docs.projectcalico.org/v3.14/manifests/calico.yaml" --kubeconfig /home/ubuntu/.kube/config
 
   - name: Copy join command to local file
-    local_action: copy content={{ token.stdout }} dest=join-command
+    local_action: copy content={{ token.stdout }} dest=join-command mode=777
 
 - hosts: worker
   become: yes
