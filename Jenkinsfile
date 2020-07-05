@@ -35,15 +35,18 @@ node {
         }
         sh 'docker push dockersing/gameoflife:1.0'
         }
-        stage('Creating an infrastructure using terraform') {
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awscred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
-    {
+        stage('Creating an infrastructure using terraform') 
+          {
+       // withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awscred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+           withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
+                      string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')])
+           {
             // some block
-            terraform apply - auto - approve
-    }
+            terraform apply - auto-approve
+         }
         }
     stage('Deployment in cluster')
-    {
+     {
        /* // echo "deploying into k8's"
         withKubeConfig(  credentialsId: 'kubernetes') {
        // some block
