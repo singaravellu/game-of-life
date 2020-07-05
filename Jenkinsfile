@@ -41,7 +41,10 @@ node {
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')])
            {
             // some block
-            terraform apply - auto-approve
+           sh script: """
+           terraform init
+           terraform apply -auto-approve
+           """       
          }
         }
    /* stage('Deployment in cluster')
