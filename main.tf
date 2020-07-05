@@ -13,7 +13,7 @@ resource "aws_instance" "k8Master"{
        Name                         = "master"
    }
    provisioner "local-exec" {
-           command = "echo [master] '\n' ${aws_instance.k8Master.public_ip}|tee >> inventory"
+           command = "echo [master] '\n' ${aws_instance.k8Master.public_ip}|tee  inventory"
 
         }
 }
@@ -28,6 +28,6 @@ resource "aws_instance" "k8Worker"{
        Name                         = "worker"
    }
    provisioner "local-exec" {
-           command = "echo  [worker] '\n' ${aws_instance.k8Worker.public_ip}|tee >> inventory"
+           command = "echo  [worker] '\n' ${aws_instance.k8Worker.public_ip}|tee  inventory"
         }
 }
