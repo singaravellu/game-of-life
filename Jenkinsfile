@@ -31,13 +31,19 @@ node {
       }
       sh 'docker push dockersing/gameoflife:1.0'
     }
+    stage('Creating an infrastructure using terraform')
+    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'awscred', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
+    {
+    // some block
+    terraform apply -auto-approve 
+    }
     stage('Deployment in cluster')
     {
-       // echo "deploying into k8's"
+       /* // echo "deploying into k8's"
         withKubeConfig(  credentialsId: 'kubernetes') {
     // some block
        sh 'kubectl delete -f Deployment.yml'
-       sh 'kubectl delete -f service.yml'
+       sh 'kubectl delete -f service.yml' */
         }
     }
 }
