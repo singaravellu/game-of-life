@@ -2,12 +2,16 @@ provider "aws" {
     region      = "ap-south-1"
 }
 
-
+resource "aws_key_pair" "main" {
+    key_name      = "publickey" 
+  public_key      = file(var.public_key_file)
+    
+}
 resource "aws_instance" "k8Master"{
    ami                              = "ami-02d55cb47e83a99a0"
    instance_type                    = "t2.medium"
    vpc_security_group_ids           =  ["sg-0e3a30ce8672c32fc"]
-   key_name                         = "Jenkinsci"
+   key_name                         = aws_key_pair.main.key_name
    associate_public_ip_address      = true
    tags                             = {
        Name                         = "master"
@@ -22,7 +26,7 @@ resource "aws_instance" "k8Worker"{
    ami                              = "ami-02d55cb47e83a99a0"
    instance_type                    = "t2.micro"
    vpc_security_group_ids           =  ["sg-0e3a30ce8672c32fc"]
-   key_name                         = "Jenkinsci"
+   key_name                         = aws_key_pair.main.key_name
    associate_public_ip_address      = true
    tags                             = {
        Name                         = "worker"

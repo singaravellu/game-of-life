@@ -49,7 +49,11 @@ node {
         }
         stage('Deploying to the k8 environment')
         {
-            echo "ok"
+            sh script:"""
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Installingdocker.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml
+            """
            
         }
    /* stage('Deployment in cluster')
