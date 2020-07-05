@@ -42,21 +42,20 @@ node {
            {
             // some block
            sh script: """
-           
-           terraform destroy -auto-approve
-           rm -rf inventory
+           terraform init
+           terraform apply -auto-approve
            """       
          }
         }
-        /*stage('Deploying to the k8 environment')
+        stage('Deploying to the k8 environment')
         {
             sh script:"""
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Installingdocker.yml
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml -vvv
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml 
             """
            sleep 30
-        }*/
+        }
    /* stage('Deployment in cluster')
      {
         echo "deploying into k8's"
