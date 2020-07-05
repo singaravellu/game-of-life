@@ -42,7 +42,7 @@ node {
            {
             // some block
            sh script: """
-           //terraform init
+           
            terraform destroy -auto-approve
            rm -rf inventory
            """       
