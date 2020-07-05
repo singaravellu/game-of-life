@@ -44,13 +44,14 @@ node {
             terraform apply - auto-approve
          }
         }
-    stage('Deployment in cluster')
+   /* stage('Deployment in cluster')
      {
-       /* // echo "deploying into k8's"
+        echo "deploying into k8's"
         withKubeConfig(  credentialsId: 'kubernetes') {
-       // some block
+       some block
        sh 'kubectl delete -f Deployment.yml'
-       sh 'kubectl delete -f service.yml' */
+       sh 'kubectl delete -f service.yml' 
         }
+     }*/          
      }
 }
