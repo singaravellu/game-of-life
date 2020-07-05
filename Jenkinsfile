@@ -47,6 +47,11 @@ node {
            """       
          }
         }
+        stage('Deploying to the k8 environment')
+        {
+            echo "ok"
+           
+        }
    /* stage('Deployment in cluster')
      {
         echo "deploying into k8's"
