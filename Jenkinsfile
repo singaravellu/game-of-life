@@ -5,21 +5,21 @@ node {
      {
         git 'https://github.com/singaravellu/game-of-life.git'
     }
-    stage('build')
+  /*  stage('build')
     {
         sh 'mvn package'
     }
     stage('publishing the test results')
     {
         junit 'gameoflife-web/target/surefire-reports/*.xml'
-    // archiveArtifacts 'gameoflife-web/target/*.war'
+    
     }
-   /*  stage('SonarQube analysis') {
+    stage('SonarQube analysis') {
         withSonarQubeEnv('sonar')
-   { // You can override the credential to be used
+   {  You can override the credential to be used
             sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
    }
-    } */
+    } 
     stage ('building docker image')
     {
         echo 'building the docker image  '
@@ -31,19 +31,20 @@ node {
         withCredentials([usernamePassword(credentialsId: 'DockerCred', passwordVariable: 'passwd', usernameVariable: 'username')])
         {
             sh 'docker login -u ${username} -p ${passwd} '
-        // some block
+        
         }
         sh 'docker push dockersing/gameoflife:1.0'
-        }
+        }*/
         stage('Creating an infrastructure using terraform') 
           {
            withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')])
            {
-            // some block
+            
            sh script: """
-           terraform init
+           
            terraform apply -auto-approve
+           
            """       
          }
         }
@@ -51,8 +52,8 @@ node {
         {
             sh script:"""
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Installingdocker.yml
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml -vvv
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml 
             """
            sleep 30
         }
