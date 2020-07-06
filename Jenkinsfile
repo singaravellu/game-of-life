@@ -5,7 +5,7 @@ node {
      {
         git 'https://github.com/singaravellu/game-of-life.git'
     }
-    stage('build')
+    /* stage('build')
     {
         sh 'mvn package'
     }
@@ -34,7 +34,7 @@ node {
         
         }
         sh 'docker push dockersing/gameoflife:1.0'
-        }
+        } 
         stage('Creating an infrastructure using terraform') 
           {
            withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
@@ -48,7 +48,7 @@ node {
            """       
          }
         }
-        stage('Deploying to the k8 environment')
+         stage('Deploying to the k8 environment')
         {
             sleep 30
             sh script:"""
@@ -58,6 +58,19 @@ node {
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml 
             """
            sleep 30
+        } */
+        stage('Destroying the infrastructure using terraform') 
+          {
+           withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
+                      string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')])
+           {
+            
+           sh script: """
+           
+           terraform destroy -auto-approve
+           rm -rf inventory
+           """       
+         }
         }
      }
 }
