@@ -5,7 +5,7 @@ node {
      {
         git 'https://github.com/singaravellu/game-of-life.git'
     }
-    /* stage('build')
+     stage('build')
     {
         sh 'mvn package'
     }
@@ -54,12 +54,12 @@ node {
             sh script:"""
             
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Installingdocker.yml
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml -vvv
+            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml -v
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml 
             """
            sleep 30
-        } */
-        stage('Destroying the infrastructure using terraform') 
+        } 
+       /* stage('Destroying the infrastructure using terraform') 
           {
            withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
                       string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')])
@@ -71,6 +71,6 @@ node {
            rm -rf inventory
            """       
          }
-        }
+        }*/
      }
 }
