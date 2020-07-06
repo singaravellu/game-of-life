@@ -60,12 +60,12 @@
   become: yes
   tasks:
   - name: Copy the join command to server location
-    copy: src=/home/ubuntu/join-command  dest=/root/join-command mode=777
+    copy: src=join-command  dest=/root/join-command mode=777
   - name: Join the node to cluster
     shell:  |
        cat /root/join-command |tail -2 >> /root/out.sh
        chmod 777 /root/out.sh
-       sh /root/out.sh
+       sh /root/out.sh 
 
 - hosts: master
   become_user: ubuntu
