@@ -14,3 +14,4 @@ phases:
 artifacts:
   files:
     - gameoflife-web/target/*.war
+  discard-paths: yes    
