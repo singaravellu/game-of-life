@@ -37,7 +37,7 @@ pipeline {
         }
         stage('docker '){
             steps {
-                sh 'docker pull'
+                sh 'docker pull hello-world'
                 // echo "building the code and ${pwd}"
                 // stash allowEmpty: true, excludes: '*.xml',
                 //  includes: 'gameoflife-web/target/*.war', name: 'gol-war'
