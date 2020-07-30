@@ -1,14 +1,14 @@
 
-def server = Artifactory.server 'Artifactory'
-def uploadSpec
-def password
+// def server = Artifactory.server 'Artifactory'
+// def uploadSpec
+// def password
 
 pipeline {
     agent any
-    triggers {
-	  // upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
-	    pollSCM('* * * * *') 
-    }
+    // triggers {
+	//   // upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
+	//     pollSCM('* * * * *') 
+    // }
     // parameters{
     //      choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
     //}
@@ -29,13 +29,22 @@ pipeline {
         stage('Package'){
             steps {
                 sh 'mvn package'
-                echo "building the code and ${pwd}"
-                stash allowEmpty: true, excludes: '*.xml',
-                 includes: 'gameoflife-web/target/*.war', name: 'gol-war'
+                /* echo "building the code and ${pwd}" */
+                // stash allowEmpty: true, excludes: '*.xml',
+                //  includes: 'gameoflife-web/target/*.war', name: 'gol-war'
                 //stash includes: '/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
             }
         }
-        stage('deploy'){
+        stage('docker '){
+            steps {
+                sh 'docker info'
+                // echo "building the code and ${pwd}"
+                // stash allowEmpty: true, excludes: '*.xml',
+                //  includes: 'gameoflife-web/target/*.war', name: 'gol-war'
+                //stash includes: '/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
+            }
+        }
+        /* stage('deploy'){
         agent { label 'redhat' }
         steps{
             //sh 'mkdir stash'
@@ -43,7 +52,7 @@ pipeline {
             unstash name: 'gol-war'
            //unstash 'war'
          }
-        }
+        } */
     //   stage('upload artifacts to jfrog'){
     //         steps{
     //                /* groovylint-disable-next-line LineLength */
