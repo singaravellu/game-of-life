@@ -1,76 +1,106 @@
-node {
-     timestamps 
-     {
-    stage('scm') 
-     {
-        git 'https://github.com/singaravellu/game-of-life.git'
+
+def server = Artifactory.server 'Artifactory'
+def uploadSpec
+def password
+
+pipeline {
+    agent any
+    triggers {
+	  // upstream(upstreamProjects: 'whoami', threshold: hudson.model.Result.SUCCESS)
+	    pollSCM('* * * * *') 
     }
-     stage('build')
-    {
-        sh 'mvn package'
-    }
-    stage('publishing the test results')
-    {
-        junit 'gameoflife-web/target/surefire-reports/*.xml'
-    
-    }
-    stage('SonarQube analysis') {
-        withSonarQubeEnv('sonar')
-   {  
-            sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
-   }
+    // parameters{
+    //      choice(name: 'branch', choices: ['master', 'feature-history', 'Three'] ,description: 'Which branch you want to build?')
+    //}
+    stages{
+        stage('checkout'){            
+            steps {
+                echo "${params.branch}"
+                echo "${env.BUILD_URL}"
+                echo "${env.BUILD_ID}"
+                echo "${env.BUILD_NUMBER}"
+                echo "${env.GIT_COMMIT}"
+                
+                //input 'want to continue to build?'
+                cleanWs()
+                checkout([$class: 'GitSCM', branches: [[name: '*/master' ]],gitTool: 'jgit',extensions:  [[$class: 'CleanBeforeCheckout']],userRemoteConfigs: [[url: 'https://github.com/singaravellu/game-of-life.git']]])
+                }
+        }
+        stage('Package'){
+            steps {
+                sh 'mvn package'
+                echo "building the code and ${pwd}"
+                stash allowEmpty: true, excludes: '*.xml',
+                 includes: 'gameoflife-web/target/*.war', name: 'gol-war'
+                //stash includes: '/var/lib/jenkins/workspace/scriptedpipe-gol/gameoflife-web/target/*.war', name: 'war'
+            }
+        }
+        stage('deploy'){
+        agent { label 'redhat' }
+        steps{
+            //sh 'mkdir stash'
+            echo "unstashing the code in ${pwd}"
+            unstash name: 'gol-war'
+           //unstash 'war'
+         }
+        }
+    //   stage('upload artifacts to jfrog'){
+    //         steps{
+    //                /* groovylint-disable-next-line LineLength */
+    //                withCredentials([usernamePassword(credentialsId: 'jfrog', passwordVariable: 'password', usernameVariable: 'user')])
+    //                {
+
+    //                    echo "${password}"
+    //                    echo "${user}"
+    //                    script{
+    //                      uploadSpec = 
+    //                         """
+    //                         {
+    //                         "files": [
+    //                             {
+    //                                 "pattern": "*/target/*.jar",
+    //                                  "target": "libs-snapshot-local",
+    //                                  "sortBy": ["created"]
+                                    
+    //                               }
+    //                                 ]
+    //                             }"""
+    //                             server.upload spec: uploadSpec, failNoOp: true
+    //                             //server.upload(uploadSpec)
+    //                    // server.upload spec: uploadSpec , failNoOp: true
+    //                    }
+                       
+    //                 }
+    //             }
+    //         }
+    //      stage('download artifacts from jfrog'){
+    //          steps{
+    //              script{
+    //                      downloadSpec = 
+    //                                 """
+    //                                 {
+    //                                 "files": [
+    //                                     {
+    //                                         "pattern": "libs-snapshot-local",
+    //                                         "target": "gameoflife/"
+                                            
+    //                                     }
+    //                                 ]
+    //                                 }"""
+    //                                // server.download(downloadSpec)
+    //                                  server.download spec: downloadSpec , failNoOp: true
+    //                 }
+             
+    //             } 
+    //         }
+    //     }   
     } 
-    stage ('building docker image')
-    {
-        echo 'building the docker image  '
-        sh 'docker image build -t dockersing/gameoflife:1.0 .'
-    }
-        stage('Push the docker image to hub') 
-        {
-        echo "login into docker hub "
-        withCredentials([usernamePassword(credentialsId: 'DockerCred', passwordVariable: 'passwd', usernameVariable: 'username')])
-        {
-            sh 'docker login -u ${username} -p ${passwd} '
-        
-        }
-        sh 'docker push dockersing/gameoflife:1.0'
-        } 
-        stage('Creating an infrastructure using terraform') 
-          {
-           withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
-                      string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')])
-           {
-            
-           sh script: """
-           terraform init
-           terraform apply -auto-approve
-           
-           """       
-         }
-        }
-         stage('Deploying to the k8 environment')
-        {
-            sleep 30
-            sh script:"""
-            
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Installingdocker.yml
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa installingk8.yml -v
-            ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu  -i ~/workspace/ci-cd/inventory --private-key=/home/ubuntu/.ssh/id_rsa Deploymentk8.yml 
-            """
-           sleep 30
-        } 
-       /* stage('Destroying the infrastructure using terraform') 
-          {
-           withCredentials([string(credentialsId: 'aws-access-key', variable: 'AWS_ACCESS_KEY_ID'),
-                      string(credentialsId: 'aws-secret-key', variable: 'AWS_SECRET_ACCESS_KEY')])
-           {
-            
-           sh script: """
-           
-           terraform destroy -auto-approve
-           rm -rf inventory
-           """       
-         }
-        }*/
-     }
+    //     stage('Sonar') {
+    //         steps{
+    //         withSonarQubeEnv('sonar-6.7.0') {
+    //          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
+    //             }
+    //         }
+    //    }
 }
+
